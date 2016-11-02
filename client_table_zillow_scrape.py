@@ -3,12 +3,6 @@ import pandas as pd
 import numpy as np
 import requests
 
-def load_data():
-    df = pd.read_csv('../data/clients.csv')
-    df.to_pickle('../data/clients_pickle')
-    print(df.info())
-    print(df.head())
-
 def zillow_scraper():
     df = pd.read_pickle('../data/clients_pickle')
     # df.drop(df.index[0])
@@ -35,29 +29,12 @@ def zillow_scraper():
             if script.has_attr('data-property-value'):
                 zest = script['data-property-value']
 
-        zestimate.append(zest)
-    df['zestimate'] = np.array(zestimate)
-    df.to_pickle('../data/clients_zillow_pickle')
+    need to do this in such a way that I write to file after every iteration in case the connection dies
+        zestimate.append([row, zest])
+        # write this to file
 
-
-
-
-
-# http://www.zillow.com/webservice/GetSearchResults.htm?zws-id=<ZWSID>&address=2114+Bigelow+Ave&citystatezip=Seattle%2C+WA
-#
-# X1-ZWz1fian5zf9jf_31kch
-#
-#
-# 315+Sedona+Drive%2C+Colorado+Springs%2C+CO+80921
-#
-# address=14126+Petrel+Dr%2C+Colorado+Springs%2C+CO+80921
-# http://www.zillow.com/homes/1_ah/315-Sedona-DR-Colorado-Springs-CO-80921_rb/?fromHomePage=true&shouldFireSellPageImplicitClaimGA=false&fromHomePageTab=zestimate
-#
-# http://www.zillow.com/homes/1_ah/3629-N-Sayre-Ave-Chicago-IL-60634_rb/
-#
-# "http://www.zillow.com/homes/1_ah/{0}_rb/".format()
-
+    # df['zestimate'] = np.array(zestimate)
+    # df.to_pickle('../data/clients_zillow_pickle')
 
 if __name__=="__main__":
-    # load_data()
     zillow_scraper()
