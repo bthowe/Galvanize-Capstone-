@@ -96,11 +96,7 @@ def invoice():
     filename.close()
     conn.close()
 
-def practice_total_revenue(practice_id):
-    print("Practice total revenue scraper:")
-    # filename = open('../data/practice_tr.csv', 'w')
-    # c = csv.writer(filename)
-    # c.writerow(('source_id', 'practice_id', 'total_revenue'))
+def practice_total_revenue(practices):
 
     config = {
       'user': os.getenv('ALLYDVM_USER_NAME'),
@@ -112,20 +108,21 @@ def practice_total_revenue(practice_id):
 
     conn = mysql.connector.connect(**config)
     crsr = conn.cursor()
-    print("Performing query for 'practice_id' {0}...\n".format(practice_id))
-    query = ("SELECT SUM(amount) FROM transactions WHERE type=1 AND posted_at>'2015-11-01' AND practice_id={0}".format(practice_id))
-    crsr.execute(query)
 
-    print("Fetching row...\n")
-    row = crsr.fetchone()
-    return row
-    # while row is not None:
-    #     c.writerow(row)
-    #     row = crsr.fetchone()
+    rows = []
+    for practice_id in practices:
+        print("Performing query for 'practice_id' {0}...".format(practice_id))
+        query = ("SELECT SUM(amount) FROM transactions WHERE type=1 AND posted_at>'2015-11-01' AND practice_id={0}".format(practice_id))
+        crsr.execute(query)
+
+        print("Fetching row...\n")
+        row = crsr.fetchone()
+        rows.append([practice_id, float(row[0])])
 
     crsr.close()
-    # filename.close()
     conn.close()
+    return rows
+
 
 # def practice_tr():
 #     print("Practice total revenue scraper:")
