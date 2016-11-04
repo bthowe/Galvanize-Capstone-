@@ -72,7 +72,6 @@ def invoice():
     c = csv.writer(filename)
     c.writerow(('source_id', 'invoice_item_id', 'practice_id', 'transaction_id', 'patient_id', 'product_id', 'last_synced_at', 'quantity', 'price', 'description', 'practice_address', 'practice_city', 'practice_state', 'practice_postal_code', 'client_address', 'client_city', 'client_state', 'client_postal_code'))
 
-
     config = {
       'user': os.getenv('ALLYDVM_USER_NAME'),
       'password': os.getenv('ALLYDVM_USER_PASSWORD'),
@@ -91,10 +90,36 @@ def invoice():
     row = crsr.fetchone()
     while row is not None:
         c.writerow(row)
-        # try:
-        #     c.writerow(row)
-        # except:
-        #     print(row)
+        row = crsr.fetchone()
+
+    crsr.close()
+    filename.close()
+    conn.close()
+
+def practice_tr():
+    print("Practice total revenue scraper:")
+    filename = open('../data/practice_tr.csv', 'w')
+    c = csv.writer(filename)
+    c.writerow(('source_id', 'practice_id', 'total_revenue'))
+
+    config = {
+      'user': os.getenv('ALLYDVM_USER_NAME'),
+      'password': os.getenv('ALLYDVM_USER_PASSWORD'),
+      'host': os.getenv('ALLYDVM_HOST'),
+      'database': 'pulsar',
+      'port': '3306'
+    }
+
+    conn = mysql.connector.connect(**config)
+    crsr = conn.cursor()
+    print("Performing query now...\n")
+    query = ("SELECT source_id, practice_id, SUM(price) FROM invoice_items GROUP BY source_id, practice_id")
+    crsr.execute(query)
+
+    print("Fetching rows now...\n")
+    row = crsr.fetchone()
+    while row is not None:
+        c.writerow(row)
         row = crsr.fetchone()
 
     crsr.close()
@@ -121,5 +146,6 @@ def load_data_invoice():
 
 if __name__=="__main__":
     # clients()
-    load_data_employees()
+    # load_data_employees()
+    practice_tr()
     # invoice()
