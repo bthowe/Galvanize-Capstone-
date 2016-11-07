@@ -1,5 +1,4 @@
 from allydvm_tables_download import practice_total_revenue
-import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
@@ -22,7 +21,7 @@ def sample_construct(sample=False):
         df_subsample = df[(df.transaction_type==1) & (df.practice_enter_date>'2015-11-01') & (df.transaction_date>'2015-11-01')] # keep only observations where transaction_type==1, keep if I have a year's worth of data, otherwise drop, keep observations only from the last year
 
     FM_df = pd.DataFrame(df.practice_id.unique(), columns=['practice_id'])
-    
+
     return FM_df, df_subsample
 
 
@@ -116,13 +115,6 @@ def offering_num(FM_df, df):
 
 
 
-def balancing(FM_df):
-    print(FM_df.num_skus.describe())
-
-    fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
-    ax.hist(FM_df.num_skus, bins=8, range=(.5, 8.5), normed=1)
-    plt.show()
 
 
 
@@ -143,16 +135,12 @@ def balancing(FM_df):
 
 
 if __name__=="__main__":
-    # FM_df, df_subsample = sample_construct()
-    # FM_df = patron_num(FM_df, df_subsample)
-    # FM_df = patron_zip(FM_df, df_subsample)
-    # FM_df = practice_TR(FM_df, df_subsample)
-    # FM_df = offering_num(FM_df, df_subsample)
-    # FM_df.to_pickle('../data/FM_df')
-
-    FM_df = pd.read_pickle('../data/FM_df')
-    balancing(FM_df)
-
+    FM_df, df_subsample = sample_construct()
+    FM_df = patron_num(FM_df, df_subsample)
+    FM_df = patron_zip(FM_df, df_subsample)
+    FM_df = practice_TR(FM_df, df_subsample)
+    FM_df = offering_num(FM_df, df_subsample)
+    FM_df.to_pickle('../data/FM_df')
 
     # df_subsample = pd.read_pickle('../data/df_subsample')
     # print(df_subsample[df_subsample.practice_id==687])
