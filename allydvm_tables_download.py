@@ -170,5 +170,5 @@ def load_data_employees():
 if __name__=="__main__":
     # clients()
     # load_data_employees()
-    practice_tr()
-    # invoice()
+    # practice_tr()
+    invoice()
