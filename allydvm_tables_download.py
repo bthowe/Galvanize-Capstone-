@@ -36,6 +36,7 @@ def clients():
     conn.close()
 
 
+
 def employees():
     print("Employees database scraper:")
     filename = open('../data/employees.csv', 'w')
@@ -65,6 +66,8 @@ def employees():
     crsr.close()
     filename.close()
     conn.close()
+
+
 
 def invoice():
     print("Merged invoice scraper:")
