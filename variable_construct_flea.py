@@ -100,26 +100,34 @@ def offering_num(FM_df, df):
     df.description = df.description.str.lower()
 
     # drugs = ['nexgard|netguard|nextgard|nextguard', 'frontline', 'topspot|top spot', 'tritek|tritak', 'bravecto', 'sentinel|sentinal', 'trifexis', 'comfortis', 'parastar', 'activil|activyl|activeyl', 'revolution|revoluton', 'vectra', 'advantage|advantix', 'advantage multi|advantagemulti', 'simparica|symparica', 'seresto|saresto|serasto']
-    drugs = ['nexgard|netguard|nextgard|nextguard|frontline|topspot|top spot|tritek|tritak', 'bravecto', 'sentinel|sentinal', 'trifexis', 'comfortis', 'parastar', 'activil|activyl|activeyl', 'revolution|revoluton', 'vectra', 'advantage|advantix', 'advantage multi|advantagemulti', 'simparica|symparica', 'seresto|saresto|serasto']
+    drugs = ['nexgard|netguard|nextgard|nextguard|frontline|topspot|top spot|tritek|tritak', 'bravecto', 'sentinel|sentinal', 'trifexis', 'comfortis', 'parastar', 'activil|activyl|activeyl', 'revolution|revoluton', 'vectra', 'advantage|advantix', 'advantage multi|advantagemulti', 'seresto|saresto|serasto']
+    #  'simparica|symparica',
     practices = df.practice_id.unique()
 
     for drug in drugs:
         FM_df[drug] = 0
 
         for prac in practices:
+            # print('drug:{0}, practice:{1}'.format(drug, prac))
             df_masked = df[df.practice_id==prac]
+            # print(df_masked[df_masked.description.str.contains(drug)])
+            # print(len(df_masked[df_masked.description.str.contains(drug)]))
+            # print(len(df_masked[df_masked.description.str.contains(drug)])>0)
+
             if len(df_masked[df_masked.description.str.contains(drug)])>0:
                 FM_df.ix[FM_df.practice_id == prac, drug] = 1
 
-    FM_df['num_skus'] = FM_df['nexgard|netguard|nextgard|nextguard|frontline|topspot|top spot|tritek|tritak'] + FM_df['bravecto'] + FM_df['sentinel|sentinal'] + FM_df['trifexis'] + FM_df['comfortis'] + FM_df['parastar'] + FM_df['activil|activyl|activeyl'] + FM_df['revolution|revoluton'] + FM_df['vectra'] + FM_df['advantage|advantix'] + FM_df['advantage multi|advantagemulti'] + FM_df['simparica|symparica'] + FM_df['seresto|saresto|serasto']
+    FM_df['num_skus'] = FM_df['nexgard|netguard|nextgard|nextguard|frontline|topspot|top spot|tritek|tritak'] + FM_df['bravecto'] + FM_df['sentinel|sentinal'] + FM_df['trifexis'] + FM_df['comfortis'] + FM_df['parastar'] + FM_df['activil|activyl|activeyl'] + FM_df['revolution|revoluton'] + FM_df['vectra'] + FM_df['advantage|advantix'] + FM_df['advantage multi|advantagemulti'] + FM_df['seresto|saresto|serasto']
+    #  + FM_df['simparica|symparica']
     # FM_df.drop(drugs, 1, inplace=True)
     return FM_df
 
 
 
 def target(FM_df, df):
-    print(FM_df.info())
-    print(df.info())
+    print('target')
+    # print(FM_df.info())
+    # print(df.info())
 
     drugs = [('nexgard|netguard|nextgard|nextguard|frontline|topspot|top spot|tritek|tritak', 12), ('bravecto', 15), ('sentinel|sentinal', 7), ('trifexis', 16), ('comfortis', 14), ('parastar', 12), ('activil|activyl|activeyl', 12), ('revolution|revoluton', 16), ('vectra', 12), ('advantage|advantix', 11), ('advantage multi|advantagemulti', 14), ('seresto|saresto|serasto', 6)]
 # ('nexgard|netguard|nextgard|nextguard', ), ('frontline', ), ('topspot|top spot', ), ('tritek|tritak', )
@@ -132,34 +140,43 @@ def target(FM_df, df):
     practices = df.practice_id.unique()
 
     for drug in drugs:
-        FM_df[drug[0]] = 0
+
+
+
+        FM_df['{0}_doses'.format(drug[0])] = 0
 
         for prac in practices:
             # print('drug:{0}, practice:{1}'.format(drug, prac))
+            # print(df[(df.practice_id==prac) & (df.description.str.contains(drug[0]))].transaction_amount.sum()/float(drug[1]))
             df_masked = df[(df.practice_id==prac) & (df.description.str.contains(drug[0]))]
 
-            drug_rev = df_masked.transaction_amount.sum()
-            doses = drug_rev/float(drug[1])
+            doses = df_masked.transaction_amount.sum()/float(drug[1])
+            # print(doses)
+            FM_df.ix[FM_df.practice_id == prac, '{0}_doses'.format(drug[0])] = doses
+            # print(FM_df)
+            # asdfadg
 
-            FM_df.ix[FM_df.practice_id == prac, drug[0]] = doses
 
-    FM_df['doses'] = FM_df['nexgard|netguard|nextgard|nextguard|frontline|topspot|top spot|tritek|tritak'] + FM_df['bravecto'] + FM_df['sentinel|sentinal'] + FM_df['trifexis'] + FM_df['comfortis'] + FM_df['parastar'] + FM_df['activil|activyl|activeyl'] + FM_df['revolution|revoluton'] + FM_df['vectra'] + FM_df['advantage|advantix'] + FM_df['advantage multi|advantagemulti'] + FM_df['seresto|saresto|serasto']
+
+    FM_df['doses'] = FM_df['nexgard|netguard|nextgard|nextguard|frontline|topspot|top spot|tritek|tritak_doses'] + FM_df['bravecto_doses'] + FM_df['sentinel|sentinal_doses'] + FM_df['trifexis_doses'] + FM_df['comfortis_doses'] + FM_df['parastar_doses'] + FM_df['activil|activyl|activeyl_doses'] + FM_df['revolution|revoluton_doses'] + FM_df['vectra_doses'] + FM_df['advantage|advantix_doses'] + FM_df['advantage multi|advantagemulti_doses'] + FM_df['seresto|saresto|serasto_doses']
     #  + FM_df['simparica|symparica']
-    FM_df.drop([drug[0] for drug in drugs], 1, inplace=True)
-    print(FM_df.head())
-    print(FM_df.info())
+    FM_df.drop(['{0}_doses'.format(drug[0]) for drug in drugs], 1, inplace=True)
+    # print(FM_df.head())
+    # print(FM_df.info())
     return FM_df
 
 
 if __name__=="__main__":
     # FM_df, df_subsample = sample_construct()
+    # df_subsample.to_pickle('../data/df_subsample_fleas')
+
     # FM_df = patron_num(FM_df, df_subsample)
     # FM_df = patron_zip(FM_df, df_subsample)
     # FM_df = practice_TR(FM_df, df_subsample)
-    # FM_df = offering_num(FM_df, df_subsample)
-    # FM_df.to_pickle('../data/FM_df_flea')
+    # FM_df.to_pickle('../data/FM_df_practice_TR')
 
-    FM_df = pd.read_pickle('../data/FM_df_flea')
-    df_subsample = pd.read_pickle('../data/df_subsample')
-    FM_df = target(FM_df, df_subsample)
-    FM_df.to_pickle('../data/flea_df')
+    # FM_df = offering_num(FM_df, df_subsample)
+    # FM_df = target(FM_df, df_subsample)
+    # FM_df.to_pickle('../data/flea_df')
+    
+    pass
