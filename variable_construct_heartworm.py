@@ -4,7 +4,7 @@ import numpy as np
 
 def sample_construct(sample=False):
     print('sample_construct')
-    df = pd.read_csv('../data/invoice_flea.csv',
+    df = pd.read_csv('../data/invoice_data.csv',
      header=0,
      usecols=['source_id', 'practice_id', 'transaction_id', 'product_id', 'quantity', 'price', 'description', 'practice_enter_date', 'transaction_client', 'transaction_date', 'transaction_type', 'transaction_amount', 'client_address', 'client_city', 'client_state', 'client_postal_code'],
      parse_dates=['transaction_date', 'practice_enter_date'])
@@ -23,6 +23,7 @@ def sample_construct(sample=False):
     FM_df = pd.DataFrame(df.practice_id.unique(), columns=['practice_id'])
 
     return FM_df, df_subsample
+
 
 
 
@@ -83,7 +84,7 @@ def patron_zip(FM_df, df):
 
 
 def practice_TR(FM_df, df):
-    print('practice_TR')
+    print('patron_TR')
     practices = df.practice_id.unique()
     tr_list = practice_total_revenue(practices)
     df_total_revenue = pd.DataFrame(tr_list, columns=['practice_id', 'total_revenue'])
@@ -95,30 +96,23 @@ def practice_TR(FM_df, df):
 
 def offering_num(FM_df, df):
     print('offering_num')
-    # FM_df.drop('num_skus', 1, inplace=True)
 
     df.description = df.description.str.lower()
 
-    # drugs = ['nexgard|netguard|nextgard|nextguard', 'frontline', 'topspot|top spot', 'tritek|tritak', 'bravecto', 'sentinel|sentinal', 'trifexis', 'comfortis', 'parastar', 'activil|activyl|activeyl', 'revolution|revoluton', 'vectra', 'advantage|advantix', 'advantage multi|advantagemulti', 'simparica|symparica', 'seresto|saresto|serasto']
-    drugs = ['nexgard|netguard|nextgard|nextguard|frontline|topspot|top spot|tritek|tritak', 'bravecto', 'sentinel|sentinal', 'trifexis', 'comfortis', 'parastar', 'activil|activyl|activeyl', 'revolution|revoluton', 'vectra', 'advantage|advantix', 'advantage multi|advantagemulti', 'seresto|saresto|serasto']
-    #  'simparica|symparica',
+    drugs = ['heartgard|heartguard|hartgard|hartguard', 'sentinel|sentinal', 'proheart|prohart', 'trifexis', 'trihart|triheart', 'iverhart|iverheart', 'interceptor|intercepter', 'revolution|revoluton', 'advantage multi|advantagemulti']
+    # drugs = ['heartgard|heartguard|hartgard|hartguard|Heartgard|Heartguard|Hartgard|Hartguard', 'sentinel|sentinal|Sentinel|Sentinal', 'proheart|Prohart|Proheart|prohart', 'trifexis|Trifexis', 'Trihart|Triheart|trihart|triheart', 'Iverhart|Iverheart|iverhart|iverheart', 'Interceptor|Intercepter|interceptor|intercepter', 'Revolution|Revoluton|revolution|revoluton', 'Advantage Multi|Advantagemulti|advantage Multi|advantagemulti']
     practices = df.practice_id.unique()
 
     for drug in drugs:
         FM_df[drug] = 0
 
         for prac in practices:
-            # print('drug:{0}, practice:{1}'.format(drug, prac))
             df_masked = df[df.practice_id==prac]
-            # print(df_masked[df_masked.description.str.contains(drug)])
-            # print(len(df_masked[df_masked.description.str.contains(drug)]))
-            # print(len(df_masked[df_masked.description.str.contains(drug)])>0)
-
             if len(df_masked[df_masked.description.str.contains(drug)])>0:
                 FM_df.ix[FM_df.practice_id == prac, drug] = 1
 
-    FM_df['num_skus'] = FM_df['nexgard|netguard|nextgard|nextguard|frontline|topspot|top spot|tritek|tritak'] + FM_df['bravecto'] + FM_df['sentinel|sentinal'] + FM_df['trifexis'] + FM_df['comfortis'] + FM_df['parastar'] + FM_df['activil|activyl|activeyl'] + FM_df['revolution|revoluton'] + FM_df['vectra'] + FM_df['advantage|advantix'] + FM_df['advantage multi|advantagemulti'] + FM_df['seresto|saresto|serasto']
-    #  + FM_df['simparica|symparica']
+    FM_df['num_skus'] = FM_df['heartgard|heartguard|hartgard|hartguard'] + FM_df['sentinel|sentinal'] + FM_df['proheart|prohart'] + FM_df['trifexis'] + FM_df['trihart|triheart'] + FM_df['iverhart|iverheart'] + FM_df['interceptor|intercepter'] + FM_df['revolution|revoluton'] + FM_df['advantage multi|advantagemulti']
+    # FM_df['num_skus'] = FM_df['heartgard|heartguard|hartgard|hartguard|Heartgard|Heartguard|Hartgard|Hartguard'] + FM_df['sentinel|sentinal|Sentinel|Sentinal'] + FM_df['proheart|Prohart|Proheart|prohart'] + FM_df['trifexis|Trifexis'] + FM_df['Trihart|Triheart|trihart|triheart'] + FM_df['Iverhart|Iverheart|iverhart|iverheart'] + FM_df['Interceptor|Intercepter|interceptor|intercepter'] + FM_df['Revolution|Revoluton|revolution|revoluton'] + FM_df['Advantage Multi|Advantagemulti|advantage Multi|advantagemulti']
     # FM_df.drop(drugs, 1, inplace=True)
     return FM_df
 
@@ -126,55 +120,43 @@ def offering_num(FM_df, df):
 
 def target(FM_df, df):
     print('target')
-    # print(FM_df.info())
-    # print(df.info())
-
-    drugs = [('nexgard|netguard|nextgard|nextguard|frontline|topspot|top spot|tritek|tritak', 12), ('bravecto', 15), ('sentinel|sentinal', 7), ('trifexis', 16), ('comfortis', 14), ('parastar', 12), ('activil|activyl|activeyl', 12), ('revolution|revoluton', 16), ('vectra', 12), ('advantage|advantix', 11), ('advantage multi|advantagemulti', 14), ('seresto|saresto|serasto', 6)]
-# ('nexgard|netguard|nextgard|nextguard', ), ('frontline', ), ('topspot|top spot', ), ('tritek|tritak', )
-# # frontline average price is 12
-# # what about simparica? , ('simparica|symparica', )
+    drugs = [('heartgard|heartguard|hartgard|hartguard', 6.5), ('Sentinel|Sentinal', 7), ('Proheart|prohart', 6), ('Trifexis', 16), ('trihart|triheart', 5), ('iverhart|iverheart', 5), ('interceptor|intercepter', 5.5), ('revolution|revoluton', 16), ('advantage Multi|advantagemulti', 14)]
 
     df.description = df.description.str.lower()
 
-    # drugs = ['nexgard|netguard|nextgard|nextguard|frontline|topspot|top spot|tritek|tritak', 'bravecto', 'sentinel|sentinal', 'trifexis', 'comfortis', 'parastar', 'activil|activyl|activeyl', 'revolution|revoluton', 'vectra', 'advantage|advantix', 'advantage multi|advantagemulti', 'simparica|symparica', 'seresto|saresto|serasto']
     practices = df.practice_id.unique()
 
     for drug in drugs:
         FM_df['{0}_doses'.format(drug[0])] = 0
 
         for prac in practices:
-            # print('drug:{0}, practice:{1}'.format(drug, prac))
-            # print(df[(df.practice_id==prac) & (df.description.str.contains(drug[0]))].transaction_amount.sum()/float(drug[1]))
             df_masked = df[(df.practice_id==prac) & (df.description.str.contains(drug[0]))]
 
             doses = df_masked.transaction_amount.sum()/float(drug[1])
             # print(doses)
             FM_df.ix[FM_df.practice_id == prac, '{0}_doses'.format(drug[0])] = doses
-            # print(FM_df)
-            # asdfadg
 
-
-
-    FM_df['doses'] = FM_df['nexgard|netguard|nextgard|nextguard|frontline|topspot|top spot|tritek|tritak_doses'] + FM_df['bravecto_doses'] + FM_df['sentinel|sentinal_doses'] + FM_df['trifexis_doses'] + FM_df['comfortis_doses'] + FM_df['parastar_doses'] + FM_df['activil|activyl|activeyl_doses'] + FM_df['revolution|revoluton_doses'] + FM_df['vectra_doses'] + FM_df['advantage|advantix_doses'] + FM_df['advantage multi|advantagemulti_doses'] + FM_df['seresto|saresto|serasto_doses']
-    #  + FM_df['simparica|symparica']
+    FM_df['doses'] = FM_df['heartgard|heartguard|hartgard|hartguard_doses'] + FM_df['Sentinel|Sentinal_doses'] + FM_df['Proheart|prohart_doses'] + FM_df['Trifexis_doses'] + FM_df['trihart|triheart_doses'] + FM_df['iverhart|iverheart_doses'] + FM_df['interceptor|intercepter_doses'] + FM_df['revolution|revoluton_doses'] + FM_df['advantage Multi|advantagemulti_doses']
     FM_df.drop(['{0}_doses'.format(drug[0]) for drug in drugs], 1, inplace=True)
-    # print(FM_df.head())
-    # print(FM_df.info())
     return FM_df
 
 
 if __name__=="__main__":
-    # FM_df, df_subsample = sample_construct()
-    # df_subsample.to_pickle('../data/df_subsample_fleas')
+        # FM_df, df_subsample = sample_construct()
+        # df_subsample.to_pickle('../data/df_subsample_heartworm')
+        #
+        # FM_df = patron_num(FM_df, df_subsample)
+        # FM_df = patron_zip(FM_df, df_subsample)
+        # FM_df = practice_TR(FM_df, df_subsample)
+        # FM_df.to_pickle('../data/FM_df_practice_TR_hw')
 
-    # FM_df = patron_num(FM_df, df_subsample)
-    # FM_df = patron_zip(FM_df, df_subsample)
-    # FM_df = practice_TR(FM_df, df_subsample)
-    # FM_df.to_pickle('../data/FM_df_practice_TR')
+        df_subsample = pd.read_pickle('../data/df_subsample_heartworm')
+        FM_df = pd.read_pickle('../data/FM_df_practice_TR_hw')
+        FM_df = offering_num(FM_df, df_subsample)
+        FM_df = target(FM_df, df_subsample)
+        FM_df.to_pickle('../data/heartworm_df')
+        print(FM_df.info())
+        print(FM_df.head())
 
-    # FM_df = offering_num(FM_df, df_subsample)
-    # FM_df = target(FM_df, df_subsample)
-    # FM_df.to_pickle('../data/flea_df')
-
-    FM_df = pd.read_pickle('../data/flea_df')
-    FM_df.to_csv('../data/flea_df.csv')
+        # FM_df = pd.read_pickle('../data/flea_df')
+        FM_df.to_csv('../data/heartworm_df.csv')
