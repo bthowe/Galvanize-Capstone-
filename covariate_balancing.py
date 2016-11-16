@@ -246,10 +246,41 @@ def error_bar_heartworm():
     plt.show()
 
 
+def error_bar_hf():
+    fig = plt.figure(figsize=(12, 8))
+
+    coef = 3528.403
+    se = 10303.77
+    ax = fig.add_subplot(1,2,1)
+    t_ob = t(204, loc = coef, scale = se)
+    ax.errorbar(1, coef, t_ob.ppf(0.975) - coef, linestyle='None', marker='o')
+    ax.axhline(y=0, color='r', ls='--')
+    ax.set_xticklabels(('', '', ''))
+    ax.set_xticks(np.arange(0, 2))
+    ax.set_xlim([0,2])
+    ax.set_title('Heartworm', fontdict = {'verticalalignment': 'bottom'})
+    # ax.set_ylabel('y: Doses', rotation=0, size='large', labelpad=30)
+
+    coef = -28373
+    se = 17225
+    ax = fig.add_subplot(1,2,2)
+    t_ob = t(204, loc = coef, scale = se)
+    ax.errorbar(1, coef, t_ob.ppf(0.975) - coef, linestyle='None', marker='o')
+    ax.axhline(y=0, color='r', ls='--')
+    ax.set_xticklabels(('', '', ''))
+    ax.set_xticks(np.arange(0, 2))
+    ax.set_xlim([0,2])
+    ax.set_title('Flea/tick', fontdict = {'verticalalignment': 'bottom'})
+    # ax.set_ylabel('y: Doses', rotation=0, size='large', labelpad=30)
+
+    plt.tight_layout()
+    plt.savefig('coefficients.png')
+
 if __name__=="__main__":
     # FM_df = pd.read_pickle('../data/flea_df')
     # balancing(FM_df)
     # plotter(FM_df)
     # print(FM_df.info())
-    error_bar_fleas()
+    # error_bar_fleas()
     # error_bar_heartworm()
+    error_bar_hf()
