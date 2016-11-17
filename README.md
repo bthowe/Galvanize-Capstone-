@@ -8,14 +8,12 @@ Using this consultancy’s database, which is comprised of data from clinics thr
 For both flea and heartworm medications, I estimate eight specifications of the linear model corresponding to four different outcome variables (doses sold, doses sold per customer, the natural log of doses sold, and the natural log of doses sold per customer (since doses sold and doses sold per customer are right skewed)) and two different key explanatory variables (a continuous and dummy version of the number of brands of a given medication type sold (high (6-8 brands), medium (4-5 brands), and low (1-3 brands) categories were created to generate the dummies (the medium is the baseline category in the regression))). The following diagrams display the results of these sixteen regressions.
 
 ###Flea Medications
-Inline-style: 
 ![alt text](https://github.com/bthowe/Galvanize-Capstone-/blob/master/images/coef_flea.png "Flea results")
 
 ###Heartworm Medications
-Inline-style: 
 ![alt text](https://github.com/bthowe/Galvanize-Capstone-/blob/master/images/coef_heartworm.png "Heartworm results")
 
-We see that none of the estimates is significant. Therefore, while I consider these results preliminary, I find no significant relationship between number of brands and sales. 
+Confidence intervals are calculated using robust estimates of the standard errors. We see that none of the estimates is significant (since 0 falls within the confidence intervals). Therefore, while I consider these results preliminary, I find no significant relationship between number of brands and sales. 
 
 
 #Files Contained in this Repo
