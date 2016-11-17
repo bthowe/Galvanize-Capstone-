@@ -9,8 +9,13 @@ While I consider these results preliminary, I find no significant relationship b
 
 
 Contained in this repo are (1) an annotated draft of the slides I presented during the Galvanize DSI capstone showcase, (2) a folder containing the python and Stata code I used to extract, process, and analysis the data. In this folder, the file...
-*allydvm_table_download.py was used to fetch data from the MySQL database
-*variable_construct_heartworm.py was used to construct relevant variables used in the heartworm medication regression
-*variable_construct_flea.py was used to construct relevant variables used in the flea medication regression
-*covariate_balancing.py was used to create various diagrams depicting the inital distributions of the variables and the results of the regressions
-*flea_regress.do is a Stata file used to run the regressions
+
+-allydvm_table_download.py was used to fetch data from the MySQL database
+
+-variable_construct_heartworm.py was used to construct relevant variables used in the heartworm medication regression
+
+-variable_construct_flea.py was used to construct relevant variables used in the flea medication regression
+
+-covariate_balancing.py was used to create various diagrams depicting the inital distributions of the variables and the results of the regressions
+
+-flea_regress.do is a Stata file used to run the regressions
