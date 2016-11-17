@@ -7,6 +7,9 @@ Using this consultancy’s database, which is comprised of data from clinics thr
 
 While I consider these results preliminary, I find no significant relationship between number of brands and sales. 
 
+Inline-style: 
+![alt text](https://github.com/bthowe/Galvanize-Capstone-/blob/master/images/coef_flea.png "Flea results")
+
 
 Contained in this repo are (1) an annotated draft of the slides I presented during the Galvanize DSI capstone showcase, (2) a folder containing the python and Stata code I used to extract, process, and analysis the data. In this folder, the file...
 
