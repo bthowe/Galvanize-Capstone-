@@ -5,11 +5,13 @@ For this capstone project I partnered with a veterinary and pharmaceutical consu
 
 Using this consultancy’s database, which is comprised of data from clinics throughout the United State, I test two hypotheses using multivariable linear regression: (1) total heartworm medication sales is decreasing in the number of heartworm pharmaceutical brands a clinic offers, and (2) total flea medication sales is decreasing in the number of heartworm pharmaceutical brands a clinic offers. 
 
-For both flea and heartworm medications, I estimate eight specifications of the linear model corresponding to four different outcome variables (doses sold, doses sold per customer, the natural log of doses sold, and the natural log of doses sold per customer (since doses sold and doses sold per customer are right skewed)) and two different key explanatory variables (a continuous and dummy version of the number of brands of a given medication type sold (high (6-8 brands), medium (4-5 brands), and low (1-3 brands) categories were created to generate the dummies (the medium is the baseline category in the regression))). The data is clinic-level. The following diagrams display the results of these sixteen regressions.
+The following displays the distributions of and correlations between the relevant variables (the data is clinic-level).
+###Correlations and Distributions of Outcomes and Covariates
+![alt text](https://github.com/bthowe/Galvanize-Capstone-/blob/master/images/var_distributions.png "Scatter matrix")
 
+For both flea and heartworm medications, I estimate eight specifications of the linear model corresponding to four different outcome variables (doses sold, doses sold per customer, the natural log of doses sold, and the natural log of doses sold per customer (since doses sold and doses sold per customer are right skewed)) and two different key explanatory variables (a continuous and dummy version of the number of brands of a given medication type sold (high (6-8 brands), medium (4-5 brands), and low (1-3 brands) categories were created to generate the dummies (the medium is the baseline category in the regression))). The following diagrams display the results of these sixteen regressions.
 ###Flea Medications
 ![alt text](https://github.com/bthowe/Galvanize-Capstone-/blob/master/images/coef_flea.png "Flea results")
-
 ###Heartworm Medications
 ![alt text](https://github.com/bthowe/Galvanize-Capstone-/blob/master/images/coef_heartworm.png "Heartworm results")
 
