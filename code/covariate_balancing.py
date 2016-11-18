@@ -32,8 +32,9 @@ def balancing(FM_df):
 
 def plotter(df):
     df['dose_per_client'] = df.doses/df.transaction_client
-    scatter_matrix(df[['transaction_client', 'weighted_income', 'total_revenue', 'num_skus', 'doses', 'dose_per_client']])
-    plt.show()
+    scatter_matrix(df[['transaction_client', 'weighted_income', 'total_revenue', 'num_skus', 'doses', 'dose_per_client']], figsize=(12, 12))
+    plt.savefig('../images/var_distributions.png')
+    # plt.show()
 
 def error_bar_fleas():
     fig = plt.figure(figsize=(12, 8))
@@ -277,10 +278,10 @@ def error_bar_hf():
     plt.savefig('../coefficients.png')
 
 if __name__=="__main__":
-    # FM_df = pd.read_pickle('../data/flea_df')
+    FM_df = pd.read_pickle('../../data/flea_df')
     # balancing(FM_df)
-    # plotter(FM_df)
+    plotter(FM_df)
     # print(FM_df.info())
     # error_bar_fleas()
     # error_bar_heartworm()
-    error_bar_hf()
+    # error_bar_hf()
