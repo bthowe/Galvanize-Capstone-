@@ -1,7 +1,90 @@
 clear
 cd "/Users/brenthowe/datascience/project"
 
-insheet using "/Users/brenthowe/datascience/project/data/flea_df.csv", comma
+
+insheet using "/Users/brenthowe/datascience/galvanize/project/data/flea_df1.csv", comma
+gen dose_per_client = doses/transaction_client
+gen l_dose_per_client = log(dose_per_client)
+gen l_doses = log(doses)
+
+//reg doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+reg doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+
+//reg dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+reg dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+
+//reg l_dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+reg l_dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+//reg l_doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+
+reg l_doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+
+
+clear
+insheet using "/Users/brenthowe/datascience/galvanize/project/data/flea_df2.csv", comma
+reg doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+gen dose_per_client = doses/transaction_client
+gen l_dose_per_client = log(dose_per_client)
+gen l_doses = log(doses)
+
+//reg doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+reg doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+
+//reg dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+reg dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+
+//reg l_dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+reg l_dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+//reg l_doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+
+reg l_doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+
+
+clear
+insheet using "/Users/brenthowe/datascience/galvanize/project/data/flea_df3.csv", comma
+reg doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+gen dose_per_client = doses/transaction_client
+gen l_dose_per_client = log(dose_per_client)
+gen l_doses = log(doses)
+
+//reg doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+reg doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+
+//reg dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+reg dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+
+//reg l_dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+reg l_dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+//reg l_doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+
+reg l_doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+
+
+clear
+insheet using "/Users/brenthowe/datascience/galvanize/project/data/flea_df4.csv", comma
+reg doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+gen dose_per_client = doses/transaction_client
+gen l_dose_per_client = log(dose_per_client)
+gen l_doses = log(doses)
+
+//reg doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+reg doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+
+//reg dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+reg dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+
+//reg l_dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+reg l_dose_per_client num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+//reg l_doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
+
+reg l_doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
+////////////////////////////////////
+///////////////////////////////////
+/////////////////////////////////////
+////////////////////////////////////
+///////////////////////////////////
+
+insheet using "/Users/brenthowe/datascience/galvanize/project/data/flea_df.csv", comma
 
 gen dose_per_client = doses/transaction_client
 gen l_dose_per_client = log(dose_per_client)
@@ -13,6 +96,7 @@ replace num_skus_mid = 1 if num_skus>3 & num_skus<=5
 gen num_skus_high = 0
 replace num_skus_high = 1 if num_skus>5
 
+drop if num_skus==8
 
 //reg doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto
 reg doses num_skus transaction_client weighted_income total_revenue nexgardnetguardnextgardnextguard bravecto sentinelsentinal trifexis comfortis parastar activilactivylactiveyl revolutionrevoluton vectra advantageadvantix advantagemultiadvantagemulti serestosarestoserasto, vce(robust)
